@@ -122,7 +122,7 @@ def restaurant_update(request, restaurant_id):
 
 def restaurant_delete(request, restaurant_id):
     restaurant_obj = Restaurant.objects.get(id=restaurant_id)
-    if not (request.user.is_staff):
+    if not (request.user.is_staff) and not (request.user == restaurant_obj.owner):
         return redirect('no-access')
     restaurant_obj.delete()
     return redirect('restaurant-list')
